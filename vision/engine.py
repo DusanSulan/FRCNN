@@ -27,14 +27,17 @@ def train_one_epoch(model, optimizer, data_loader, device, epoch, print_freq):
         images = list(image.to(device) for image in images)
         targets = [{k: v.to(device) for k, v in t.items()} for t in targets]
 
+        #get loss dict - for backprop
         loss_dict = model(images, targets)
-
+        # sum all losses - for backprop
         losses = sum(loss for loss in loss_dict.values())
 
-        # reduce losses over all GPUs for logging purposes
+        # get losses dict of metrics
         loss_dict_reduced = utilss.reduce_dict(loss_dict)
+        #get reduced loss 
         losses_reduced = sum(loss for loss in loss_dict_reduced.values())
-
+        
+        #get values of reduced dict
         loss_value = losses_reduced.item()
 
         if not math.isfinite(loss_value):
@@ -48,7 +51,7 @@ def train_one_epoch(model, optimizer, data_loader, device, epoch, print_freq):
 
         if lr_scheduler is not None:
             lr_scheduler.step()
-
+        #metric_logger update
         metric_logger.update(loss=losses_reduced, **loss_dict_reduced)
         metric_logger.update(lr=optimizer.param_groups[0]["lr"])
 
