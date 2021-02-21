@@ -197,12 +197,17 @@ def convert_to_coco_api(ds):
 
 def get_coco_api_from_dataset(dataset):
     for _ in range(10):
+        
         if isinstance(dataset, torchvision.datasets.CocoDetection):
+            print("Cocodetection" + str(_))
             break
         if isinstance(dataset, torch.utils.data.Subset):
+            print("CocodeSubset" + str(_))
             dataset = dataset.dataset
     if isinstance(dataset, torchvision.datasets.CocoDetection):
+        print("Cocodetection11dataset")
         return dataset.coco
+    print("needCOCOAPI DS")
     return convert_to_coco_api(dataset)
 
 
