@@ -12,11 +12,10 @@ from collections import defaultdict
 import utilss as utils
 
 class PestEvaluator(object):
-    def __init__(self, dataloader):
+    def __init__(self, dataloader, predictions):
         self.img_ids = []
-        self.eval_imgs = []
-    #predictions = res = labels and boxes, classes , scores
-    def update(self, predictions):
+        
+        #predictions = res = labels and boxes, classes , scores
         img_ids = list(np.unique(list(predictions.keys())))
         
         #write predictions
@@ -48,7 +47,7 @@ class PestEvaluator(object):
                         "category_id": labels[k],
                         "score": scores[k],
                     }
-                    for k, box in enumerate(boxes)
+                    for k, box in enumerate(scores)
                 ]
             )
         return coco_results
