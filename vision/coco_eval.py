@@ -29,14 +29,17 @@ class CocoEvaluator(object):
 
         self.img_ids = []
         self.eval_imgs = {k: [] for k in iou_types}
-    #predictions = res = boxes, labels, scores
+    #predictions = res = labels and boxes, classes , scores
     def update(self, predictions):
         img_ids = list(np.unique(list(predictions.keys())))
         self.img_ids.extend(img_ids)
 
         for iou_type in self.iou_types:
+            #write predictions
             results = self.prepare(predictions, iou_type)
+            #Load result file or it is COCO()
             coco_dt = loadRes(self.coco_gt, results) if results else COCO()
+            #evaluace?
             coco_eval = self.coco_eval[iou_type]
 
             coco_eval.cocoDt = coco_dt
