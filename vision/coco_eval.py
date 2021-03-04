@@ -190,6 +190,7 @@ def merge(img_ids, eval_imgs):
 def create_common_coco_eval(coco_eval, img_ids, eval_imgs):
     img_ids, eval_imgs = merge(img_ids, eval_imgs)
     img_ids = list(img_ids)
+    coco_eval.params.catIds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
     eval_imgs = list(eval_imgs.flatten())
 
     coco_eval.evalImgs = eval_imgs
