@@ -19,8 +19,10 @@ import utilss as utils
 
 
 class CocoEvaluator(object):
-    def __init__(self, coco_gt, iou_types):
+    def __init__(self, coco_gt, iou_types, class_id):
         assert isinstance(iou_types, (list, tuple))
+        coco_eval.params.catIds = [class_id]
+        coco_eval.params.useCats = True
         coco_gt = copy.deepcopy(coco_gt)
         self.coco_gt = coco_gt
 
@@ -190,7 +192,6 @@ def merge(img_ids, eval_imgs):
 def create_common_coco_eval(coco_eval, img_ids, eval_imgs):
     img_ids, eval_imgs = merge(img_ids, eval_imgs)
     img_ids = list(img_ids)
-    coco_eval.params.catIds = [1, 2, 3, 4, 5, 6, 7, 8, 9]
     eval_imgs = list(eval_imgs.flatten())
 
     coco_eval.evalImgs = eval_imgs
