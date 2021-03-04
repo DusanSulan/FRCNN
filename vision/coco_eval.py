@@ -19,9 +19,9 @@ import utilss as utils
 
 
 class CocoEvaluator(object):
-    def __init__(self, coco_gt, iou_types, class_id):
+    def __init__(self, coco_gt, iou_types):
         assert isinstance(iou_types, (list, tuple))
-        coco_eval.params.catIds = class_id
+        #coco_eval.params.catIds 
         coco_eval.params.useCats = True
         coco_gt = copy.deepcopy(coco_gt)
         self.coco_gt = coco_gt
