@@ -475,7 +475,7 @@ class COCOeval:
                 stats[1 + i*4] = _summarize(1, iouThr=.5, maxDets=self.params.maxDets[2] , cl= i )
                 stats[2 + i*4] = _summarize(0, iouThr=.5, maxDets=self.params.maxDets[1] , cl = i )
                 stats[3 + i*4] = _summarize(0, iouThr=.5,  maxDets=self.params.maxDets[2] , cl = i )
-                print(catIds)
+                print(p.catIds)
 
             return stats
         def _summarizeKps():
