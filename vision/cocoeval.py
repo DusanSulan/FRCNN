@@ -465,11 +465,11 @@ class COCOeval:
             #    avg_ap +=np.mean(s[:,:,i,:])
             #print('(all categories) mAP : {}'.format(avg_ap / num_classes))
 
-            print(iStr.format(titleStr, typeStr, iouStr, areaRng, maxDets, mean_s))
+            print("Class: " + str(cl) + " - " iStr.format(titleStr, typeStr, iouStr, areaRng, maxDets, mean_s))
             return mean_s
         def _summarizeDets():
             stats = np.zeros((4*11,))
-            for i in range(0,10):
+            for i in range(0,5):
                 stats[0] = _summarize(1, iouThr=.5,  cl = i )
                 stats[1] = _summarize(1, iouThr=.5, maxDets=self.params.maxDets[2] , cl= i )
                 stats[2] = _summarize(0, iouThr=.5, maxDets=self.params.maxDets[1] , cl = i )
