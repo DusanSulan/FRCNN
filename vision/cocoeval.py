@@ -455,12 +455,14 @@ class COCOeval:
             else:
                 mean_s = np.mean(s[s>-1])
 
-            #cacluate AP(average precision) for each category
-            num_classes = 10
+            #cacluate AP(average precision) for each category           self.eval['count'][2]
+            num_classes = self.eval['precision']
             avg_ap = 0.0
+            classes = s[:,:,i,:]
             for i in range(0, num_classes):
-                print('category : {0} : {1}'.format(i,np.mean(s[:,:,i,:])))
-                avg_ap +=np.mean(s[:,:,i,:])
+                try:
+                    print('category : {0} : {1}'.format(i,np.mean(s[:,:,i,:])))
+                    avg_ap +=np.mean(s[:,:,i,:])
             print('(all categories) mAP : {}'.format(avg_ap / num_classes))
 
             print(iStr.format(titleStr, typeStr, iouStr, areaRng, maxDets, mean_s))
