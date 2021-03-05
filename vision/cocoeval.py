@@ -457,8 +457,8 @@ class COCOeval:
 
             #cacluate AP(average precision) for each category           self.eval['count'][2]
             #num_classes = self.eval['precision']
-            avg_ap = 0.0
-            num_classes = 10 #np.unique(s[:,:,i,:][2])
+            #avg_ap = 0.0
+            #num_classes = 10 #np.unique(s[:,:,i,:][2])
             #for i in range(0, num_classes):
             #for i in p.catIds:
             #    print('category : {0} : {1}'.format(i,np.mean(s[:,:,i,:])))
@@ -466,14 +466,16 @@ class COCOeval:
             #print('(all categories) mAP : {}'.format(avg_ap / num_classes))
 
             print("Class: " + str(cl) + " - " + iStr.format(titleStr, typeStr, iouStr, areaRng, maxDets, mean_s))
+            
             return mean_s
         def _summarizeDets():
             stats = np.zeros((4*11,))
             for i in range(0,5):
-                stats[0] = _summarize(1, iouThr=.5,  cl = i )
-                stats[1] = _summarize(1, iouThr=.5, maxDets=self.params.maxDets[2] , cl= i )
-                stats[2] = _summarize(0, iouThr=.5, maxDets=self.params.maxDets[1] , cl = i )
-                stats[3] = _summarize(0, iouThr=.5,  maxDets=self.params.maxDets[2] , cl = i )
+                stats[0 + i*4] = _summarize(1, iouThr=.5,  cl = i )
+                stats[1 + i*4] = _summarize(1, iouThr=.5, maxDets=self.params.maxDets[2] , cl= i )
+                stats[2 + i*4] = _summarize(0, iouThr=.5, maxDets=self.params.maxDets[1] , cl = i )
+                stats[3 + i*4] = _summarize(0, iouThr=.5,  maxDets=self.params.maxDets[2] , cl = i )
+                print(catIds)
 
             return stats
         def _summarizeKps():
