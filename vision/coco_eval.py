@@ -27,7 +27,7 @@ class CocoEvaluator(object):
 
         self.iou_types = iou_types
         self.coco_eval = {}
-        coco_eval.params.useCats = True
+        self.coco_eval.params.useCats = True
         for iou_type in iou_types:
             self.coco_eval[iou_type] = COCOeval(coco_gt, iouType=iou_type)
 
