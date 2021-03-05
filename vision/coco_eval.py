@@ -11,7 +11,6 @@ import torch._six
 from cocoeval import COCOeval
 
 from pycocotools.coco import COCO
-import pycocotools.mask as mask_util
 
 from collections import defaultdict
 
@@ -100,40 +99,6 @@ class CocoEvaluator(object):
             )
         return coco_results
 
-    def prepare_for_coco_segmentation(self, predictions):
-        coco_results = []
-        for original_id, prediction in predictions.items():
-            if len(prediction) == 0:
-                continue
-
-            scores = prediction["scores"]
-            labels = prediction["labels"]
-            masks = prediction["masks"]
-
-            masks = masks > 0.5
-
-            scores = prediction["scores"].tolist()
-            labels = prediction["labels"].tolist()
-
-            rles = [
-                mask_util.encode(np.array(mask[0, :, :, np.newaxis], dtype=np.uint8, order="F"))[0]
-                for mask in masks
-            ]
-            for rle in rles:
-                rle["counts"] = rle["counts"].decode("utf-8")
-
-            coco_results.extend(
-                [
-                    {
-                        "image_id": original_id,
-                        "category_id": labels[k],
-                        "segmentation": rle,
-                        "score": scores[k],
-                    }
-                    for k, rle in enumerate(rles)
-                ]
-            )
-        return coco_results
 
     def prepare_for_coco_keypoint(self, predictions):
         coco_results = []
@@ -276,15 +241,6 @@ def loadRes(self, resFile):
             if 'segmentation' not in ann:
                 ann['segmentation'] = [[x1, y1, x1, y2, x2, y2, x2, y1]]
             ann['area'] = bb[2] * bb[3]
-            ann['id'] = id + 1
-            ann['iscrowd'] = 0
-    elif 'segmentation' in anns[0]:
-        res.dataset['categories'] = copy.deepcopy(self.dataset['categories'])
-        for id, ann in enumerate(anns):
-            # now only support compressed RLE format as segmentation results
-            ann['area'] = maskUtils.area(ann['segmentation'])
-            if 'bbox' not in ann:
-                ann['bbox'] = maskUtils.toBbox(ann['segmentation'])
             ann['id'] = id + 1
             ann['iscrowd'] = 0
     elif 'keypoints' in anns[0]:
