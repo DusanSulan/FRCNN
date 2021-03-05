@@ -425,7 +425,7 @@ class COCOeval:
         Compute and display summary metrics for evaluation results.
         Note this functin can *only* be applied on the default parameter setting
         '''
-        def _summarize( ap=1, iouThr=None, areaRng='all', maxDets=100, class = 0 ):
+        def _summarize( ap=1, iouThr=None, areaRng='all', maxDets=100, cl=0 ):
             p = self.params
             iStr = ' {:<18} {} @[ IoU={:<9} | area={:>6s} | maxDets={:>3d} ] = {:0.3f}'
             titleStr = 'Average Precision' if ap == 1 else 'Average Recall'
@@ -442,14 +442,14 @@ class COCOeval:
                 if iouThr is not None:
                     t = np.where(iouThr == p.iouThrs)[0]
                     s = s[t]
-                s = s[:,:,class,aind,mind]
+                s = s[:,:,cl,aind,mind]
             else:
                 # dimension of recall: [TxKxAxM]
                 s = self.eval['recall']
                 if iouThr is not None:
                     t = np.where(iouThr == p.iouThrs)[0]
                     s = s[t]
-                s = s[:,class,aind,mind]
+                s = s[:,cl,aind,mind]
             if len(s[s>-1])==0:
                 mean_s = -1
             else:
@@ -471,9 +471,9 @@ class COCOeval:
             stats = np.zeros((4*11,))
             for i = 1 in range(0,10)
                 stats[0] = _summarize(1, iouThr=.5,  class = i )
-                stats[1] = _summarize(1, iouThr=.5, maxDets=self.params.maxDets[2] , class = i )
-                stats[2] = _summarize(0, iouThr=.5, maxDets=self.params.maxDets[1] , class = i )
-                stats[3] = _summarize(0, iouThr=.5,  maxDets=self.params.maxDets[2] , class = i )
+                stats[1] = _summarize(1, iouThr=.5, maxDets=self.params.maxDets[2] , cl= i )
+                stats[2] = _summarize(0, iouThr=.5, maxDets=self.params.maxDets[1] , cl = i )
+                stats[3] = _summarize(0, iouThr=.5,  maxDets=self.params.maxDets[2] , cl = i )
 
             return stats
         def _summarizeKps():
