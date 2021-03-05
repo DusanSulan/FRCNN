@@ -8,7 +8,7 @@ import torch
 import torch._six
 
 #from pycocotools.cocoeval import COCOeval
-import cocoeval import COCOeval
+import cocoeval
 
 from pycocotools.coco import COCO
 
