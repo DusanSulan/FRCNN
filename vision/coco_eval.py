@@ -21,12 +21,13 @@ class CocoEvaluator(object):
     def __init__(self, coco_gt, iou_types):
         assert isinstance(iou_types, (list, tuple))
         #coco_eval.params.catIds 
-        coco_eval.params.useCats = True
+        
         coco_gt = copy.deepcopy(coco_gt)
         self.coco_gt = coco_gt
 
         self.iou_types = iou_types
         self.coco_eval = {}
+        coco_eval.params.useCats = True
         for iou_type in iou_types:
             self.coco_eval[iou_type] = COCOeval(coco_gt, iouType=iou_type)
 
