@@ -470,7 +470,7 @@ class COCOeval:
         def _summarizeDets():
             stats = np.zeros((4*11,))
             for i in range(0,10):
-                stats[0] = _summarize(1, iouThr=.5,  class = i )
+                stats[0] = _summarize(1, iouThr=.5,  cl = i )
                 stats[1] = _summarize(1, iouThr=.5, maxDets=self.params.maxDets[2] , cl= i )
                 stats[2] = _summarize(0, iouThr=.5, maxDets=self.params.maxDets[1] , cl = i )
                 stats[3] = _summarize(0, iouThr=.5,  maxDets=self.params.maxDets[2] , cl = i )
