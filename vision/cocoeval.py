@@ -456,10 +456,11 @@ class COCOeval:
                 mean_s = np.mean(s[s>-1])
 
             #cacluate AP(average precision) for each category           self.eval['count'][2]
-            num_classes = self.eval['precision']
+            #num_classes = self.eval['precision']
             avg_ap = 0.0
-            classes = s[:,:,i,:]
-            for i in range(0, num_classes):
+            num_classes = 10 #np.unique(s[:,:,i,:][2])
+            #for i in range(0, num_classes):
+            for i in p.catIds:
                 try:
                     print('category : {0} : {1}'.format(i,np.mean(s[:,:,i,:])))
                     avg_ap +=np.mean(s[:,:,i,:])
