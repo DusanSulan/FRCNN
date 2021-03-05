@@ -460,10 +460,10 @@ class COCOeval:
             avg_ap = 0.0
             num_classes = 10 #np.unique(s[:,:,i,:][2])
             #for i in range(0, num_classes):
-            """for i in p.catIds:
-                print('category : {0} : {1}'.format(i,np.mean(s[:,:,i,:])))
-                avg_ap +=np.mean(s[:,:,i,:])
-            print('(all categories) mAP : {}'.format(avg_ap / num_classes))"""
+            #for i in p.catIds:
+            #    print('category : {0} : {1}'.format(i,np.mean(s[:,:,i,:])))
+            #    avg_ap +=np.mean(s[:,:,i,:])
+            #print('(all categories) mAP : {}'.format(avg_ap / num_classes))
 
             print(iStr.format(titleStr, typeStr, iouStr, areaRng, maxDets, mean_s))
             return mean_s
