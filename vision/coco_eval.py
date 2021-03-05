@@ -204,9 +204,6 @@ def createIndex(self):
     self.cats = cats
 
 
-maskUtils = mask_util
-
-
 def loadRes(self, resFile):
     """
     Load result file and return a result api object.
