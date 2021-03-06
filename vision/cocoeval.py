@@ -425,7 +425,7 @@ class COCOeval:
         Compute and display summary metrics for evaluation results.
         Note this functin can *only* be applied on the default parameter setting
         '''
-        def _summarize( ap=1, iouThr=None, areaRng='all', maxDets=100, cl=0 ):
+        def _summarize( ap=1, iouThr=None, areaRng='all', maxDets=100, cl=None ):
             p = self.params
             iStr = ' {:<18} {} @[ IoU={:<9} | area={:>6s} | maxDets={:>3d} ] = {:0.3f}'
             titleStr = 'Average Precision' if ap == 1 else 'Average Recall'
@@ -442,14 +442,20 @@ class COCOeval:
                 if iouThr is not None:
                     t = np.where(iouThr == p.iouThrs)[0]
                     s = s[t]
-                s = s[:,:,cl,aind,mind]
+                if (cl != None):
+                    s = s[:,:,cl,aind,mind]
+                else:
+                    s = s[:,:,:,aind,mind]
             else:
                 # dimension of recall: [TxKxAxM]
                 s = self.eval['recall']
                 if iouThr is not None:
                     t = np.where(iouThr == p.iouThrs)[0]
                     s = s[t]
-                s = s[:,cl,aind,mind]
+                if (cl != None) :
+                    s = s[:,cl,aind,mind]
+                else:
+                    s = s[:,:,aind,mind]
             if len(s[s>-1])==0:
                 mean_s = -1
             else:
@@ -469,14 +475,19 @@ class COCOeval:
             
             return mean_s
         def _summarizeDets():
-            stats = np.zeros((4*11,))
+            stats = np.zeros((5*11,))
             for i in range(0,6):
                 stats[0 + i*4] = _summarize(1, iouThr=.5,  cl = i )
                 stats[1 + i*4] = _summarize(1, iouThr=.5, maxDets=self.params.maxDets[2] , cl= i )
                 stats[2 + i*4] = _summarize(0, iouThr=.5, maxDets=self.params.maxDets[1] , cl = i )
                 stats[3 + i*4] = _summarize(0, iouThr=.5,  maxDets=self.params.maxDets[2] , cl = i )
                 print(self.params.catIds)
-
+            i = 6
+            stats[0 + i*4] = _summarize(1, iouThr=.5)
+            stats[1 + i*4] = _summarize(1, iouThr=.5, maxDets=self.params.maxDets[2] )
+            stats[2 + i*4] = _summarize(0, iouThr=.5, maxDets=self.params.maxDets[1])
+            stats[3 + i*4] = _summarize(0, iouThr=.5,  maxDets=self.params.maxDets[2])
+            
             return stats
         def _summarizeKps():
             stats = np.zeros((10,))
