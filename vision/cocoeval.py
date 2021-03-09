@@ -480,11 +480,11 @@ class COCOeval:
             stats = np.zeros((5*11,))
             
             stats[0] = _summarize(1, iouThr=.5, maxDets=self.params.maxDets[2])
-            stats[2] = _summarize(0, iouThr=.5, maxDets=self.params.maxDets[2])
+            stats[1] = _summarize(0, iouThr=.5, maxDets=self.params.maxDets[2])
             
-            for i in range(1,7):
-                stats[0 + i*4] = _summarize(1, iouThr=.5, maxDets=self.params.maxDets[2],   cl = i )
-                stats[2 + i*4] = _summarize(0, iouThr=.5, maxDets=self.params.maxDets[2] , cl = i )
+            for i in range(0,6):
+                stats[2 + i*2] = _summarize(1, iouThr=.5, maxDets=self.params.maxDets[2],   cl = i )
+                stats[3 + i*2] = _summarize(0, iouThr=.5, maxDets=self.params.maxDets[2] , cl = i )
                 print(self.params.catIds)
 
             
