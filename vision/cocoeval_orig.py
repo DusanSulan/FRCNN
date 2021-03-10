@@ -4,7 +4,6 @@ import numpy as np
 import datetime
 import time
 from collections import defaultdict
-from . import mask as maskUtils
 import copy
 
 class COCOeval:
@@ -100,10 +99,7 @@ class COCOeval:
             dts=self.cocoDt.loadAnns(self.cocoDt.getAnnIds(imgIds=p.imgIds))
 
         # convert ground truth to mask if iouType == 'segm'
-        if p.iouType == 'segm':
-            _toMask(gts, self.cocoGt)
-            _toMask(dts, self.cocoDt)
-        # set ignore flag
+
         for gt in gts:
             gt['ignore'] = gt['ignore'] if 'ignore' in gt else 0
             gt['ignore'] = 'iscrowd' in gt and gt['iscrowd']
@@ -275,7 +271,7 @@ class COCOeval:
                     # information about best match so far (m=-1 -> unmatched)
                     iou = min([t,1-1e-10])
                     m   = -1
-                    for gind, g in enumerate(gt):
+                    for gind, g in enumerate(gt):m
                         # if this gt already matched, and not a crowd, continue
                         if gtm[tind,gind]>0 and not iscrowd[gind]:
                             continue
