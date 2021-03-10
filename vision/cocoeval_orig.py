@@ -271,7 +271,7 @@ class COCOeval:
                     # information about best match so far (m=-1 -> unmatched)
                     iou = min([t,1-1e-10])
                     m   = -1
-                    for gind, g in enumerate(gt):m
+                    for gind, g in enumerate(gt):
                         # if this gt already matched, and not a crowd, continue
                         if gtm[tind,gind]>0 and not iscrowd[gind]:
                             continue
