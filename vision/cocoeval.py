@@ -471,10 +471,10 @@ class COCOeval:
             #    print('category : {0} : {1}'.format(i,np.mean(s[:,:,i,:])))
             #    avg_ap +=np.mean(s[:,:,i,:])
             #print('(all categories) mAP : {}'.format(avg_ap / num_classes))
-            if (cl == None) :
+            if (cls == None) :
                 print("All classes " + " - " + iStr.format(titleStr, typeStr, iouStr, areaRng, maxDets, mean_s))
             else:
-                print("Class: " + str(self.params.catIds[cl]) + " - " + iStr.format(titleStr, typeStr, iouStr, areaRng, maxDets, mean_s))
+                print("Class: " + str(self.params.catIds[cls]) + " - " + iStr.format(titleStr, typeStr, iouStr, areaRng, maxDets, mean_s))
             
             return mean_s
         def _summarizeDets():
