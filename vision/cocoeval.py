@@ -425,7 +425,7 @@ class COCOeval:
         Compute and display summary metrics for evaluation results.
         Note this functin can *only* be applied on the default parameter setting
         '''
-        def _summarize( ap=1, iouThr=None, areaRng='all', maxDets=100, cl=None ):
+        def _summarize( ap=1, iouThr=None, areaRng='all', maxDets=100, cls=None ):
             p = self.params
             iStr = ' {:<18} {} @[ IoU={:<9} | area={:>6s} | maxDets={:>3d} ] = {:0.3f}'
             titleStr = 'Average Precision' if ap == 1 else 'Average Recall'
@@ -435,6 +435,7 @@ class COCOeval:
 
             aind = [i for i, aRng in enumerate(p.areaRngLbl) if aRng == areaRng]
             mind = [i for i, mDet in enumerate(p.maxDets) if mDet == maxDets]
+            cl = [i for i, mCls in enumerate(p.catIds) if mCls == cls]  
             if ap == 1:
                 # dimension of precision: [TxRxKxAxM]
                 s = self.eval['precision']
@@ -483,8 +484,8 @@ class COCOeval:
             stats[1] = _summarize(0, iouThr=.5, maxDets=self.params.maxDets[2])
             
             for i in range(0,6):
-                stats[2 + i*2] = _summarize(1, iouThr=.5, maxDets=self.params.maxDets[2],   cl = i )
-                stats[3 + i*2] = _summarize(0, iouThr=.5, maxDets=self.params.maxDets[2] , cl = i )
+                stats[2 + i*2] = _summarize(1, iouThr=.5, maxDets=self.params.maxDets[2],   cls = i )
+                stats[3 + i*2] = _summarize(0, iouThr=.5, maxDets=self.params.maxDets[2] , cls = i )
                 print(self.params.catIds)
 
             
