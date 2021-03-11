@@ -443,7 +443,7 @@ class COCOeval:
                 if iouThr is not None:
                     t = np.where(iouThr == p.iouThrs)[0]
                     s = s[t]
-                if (cl != None):
+                if (cls != None):
                     s = s[:,:,cl,aind,mind]
                 else:
                     s = s[:,:,:,aind,mind]
@@ -453,7 +453,7 @@ class COCOeval:
                 if iouThr is not None:
                     t = np.where(iouThr == p.iouThrs)[0]
                     s = s[t]
-                if (cl != None) :
+                if (cls != None) :
                     s = s[:,cl,aind,mind]
                 else:
                     s = s[:,:,aind,mind]
@@ -471,9 +471,11 @@ class COCOeval:
             #    print('category : {0} : {1}'.format(i,np.mean(s[:,:,i,:])))
             #    avg_ap +=np.mean(s[:,:,i,:])
             #print('(all categories) mAP : {}'.format(avg_ap / num_classes))
+            
             if (cls == None) :
                 print("All classes " + " - " + iStr.format(titleStr, typeStr, iouStr, areaRng, maxDets, mean_s))
             else:
+                print(cls)
                 print("Class: " + str(self.params.catIds[cls]) + " - " + iStr.format(titleStr, typeStr, iouStr, areaRng, maxDets, mean_s))
             
             return mean_s
