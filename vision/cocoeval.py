@@ -425,7 +425,7 @@ class COCOeval:
         Compute and display summary metrics for evaluation results.
         Note this functin can *only* be applied on the default parameter setting
         '''
-        def _summarize( ap=1, iouThr=None, areaRng='all', maxDets=100, cls=None ):
+        def _summarize( ap=1, iouThr=None, areaRng='all', maxDets=100, cls=999 ):
             p = self.params
             iStr = ' {:<18} {} @[ IoU={:<9} | area={:>6s} | maxDets={:>3d} ] = {:0.3f}'
             titleStr = 'Average Precision' if ap == 1 else 'Average Recall'
@@ -435,7 +435,8 @@ class COCOeval:
 
             aind = [i for i, aRng in enumerate(p.areaRngLbl) if aRng == areaRng]
             mind = [i for i, mDet in enumerate(p.maxDets) if mDet == maxDets]
-            cl = [i for i, mCls in enumerate(p.catIds) if mCls == cls]  
+            if cls < 999 :
+                cl = [i for i, mCls in enumerate(p.catIds) if mCls == cls]  
             if ap == 1:
                 # dimension of precision: [TxRxKxAxM]
                 s = self.eval['precision']
@@ -443,7 +444,7 @@ class COCOeval:
                 if iouThr is not None:
                     t = np.where(iouThr == p.iouThrs)[0]
                     s = s[t]
-                if (cls != None):
+                if (cls < 999 ):
                     s = s[:,:,cl,aind,mind]
                 else:
                     s = s[:,:,:,aind,mind]
@@ -453,7 +454,7 @@ class COCOeval:
                 if iouThr is not None:
                     t = np.where(iouThr == p.iouThrs)[0]
                     s = s[t]
-                if (cls != None) :
+                if (cls < 999) :
                     s = s[:,cl,aind,mind]
                 else:
                     s = s[:,:,aind,mind]
@@ -471,11 +472,9 @@ class COCOeval:
             #    print('category : {0} : {1}'.format(i,np.mean(s[:,:,i,:])))
             #    avg_ap +=np.mean(s[:,:,i,:])
             #print('(all categories) mAP : {}'.format(avg_ap / num_classes))
-            
             if (cls == None) :
                 print("All classes " + " - " + iStr.format(titleStr, typeStr, iouStr, areaRng, maxDets, mean_s))
             else:
-                print(cls)
                 print("Class: " + str(self.params.catIds[cls]) + " - " + iStr.format(titleStr, typeStr, iouStr, areaRng, maxDets, mean_s))
             
             return mean_s
