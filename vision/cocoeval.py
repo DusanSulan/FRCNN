@@ -472,7 +472,7 @@ class COCOeval:
             #    print('category : {0} : {1}'.format(i,np.mean(s[:,:,i,:])))
             #    avg_ap +=np.mean(s[:,:,i,:])
             #print('(all categories) mAP : {}'.format(avg_ap / num_classes))
-            if (cls == None) :
+            if (cls == 999) :
                 print("All classes " + " - " + iStr.format(titleStr, typeStr, iouStr, areaRng, maxDets, mean_s))
             else:
                 print("Class: " + str(self.params.catIds[cls]) + " - " + iStr.format(titleStr, typeStr, iouStr, areaRng, maxDets, mean_s))
