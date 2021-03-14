@@ -28,8 +28,6 @@ class RandomHorizontalFlip(object):
         return image, target
 
 class Normalize(object):
-    def __init__(self):
-
     def __call__(self, image, target):
         image = image.torchvision.transforms.Normalize(
         mean=[0.485, 0.456, 0.406],
