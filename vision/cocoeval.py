@@ -485,8 +485,8 @@ class COCOeval:
             stats[1] = _summarize(0, iouThr=.5, maxDets=self.params.maxDets[2])
             
             for i in range(0,len(self.params.catIds)):
-                stats[2 + i*2] = _summarize(1, iouThr=.5, maxDets=self.params.maxDets[2],   cls = i )
-                stats[3 + i*2] = _summarize(0, iouThr=.5, maxDets=self.params.maxDets[2] , cls = i )
+                stats[2 + i*2] = _summarize(1, iouThr=.5, maxDets=self.params.maxDets[2],   cls = self.params.catIds[i] )
+                stats[3 + i*2] = _summarize(0, iouThr=.5, maxDets=self.params.maxDets[2] , cls = self.params.catIds[i] )
                 print(self.params.catIds)
 
             
