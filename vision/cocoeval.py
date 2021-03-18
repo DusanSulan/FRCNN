@@ -475,7 +475,7 @@ class COCOeval:
             if (cls == 999) :
                 print("All classes " + " - " + iStr.format(titleStr, typeStr, iouStr, areaRng, maxDets, mean_s))
             else:
-                print("Class: " + str(self.params.catIds[cls]) + " - " + iStr.format(titleStr, typeStr, iouStr, areaRng, maxDets, mean_s))
+                print("Class: " + str(cls) + " - " + iStr.format(titleStr, typeStr, iouStr, areaRng, maxDets, mean_s))
             
             return mean_s
         def _summarizeDets():
@@ -485,6 +485,8 @@ class COCOeval:
             stats[1] = _summarize(0, iouThr=.5, maxDets=self.params.maxDets[2])
             
             for i in range(0,len(self.params.catIds)):
+                print(self.params.catIds[i])
+                print(i)
                 stats[2 + i*2] = _summarize(1, iouThr=.5, maxDets=self.params.maxDets[2],   cls = self.params.catIds[i] )
                 stats[3 + i*2] = _summarize(0, iouThr=.5, maxDets=self.params.maxDets[2] , cls = self.params.catIds[i] )
                 print(self.params.catIds)
