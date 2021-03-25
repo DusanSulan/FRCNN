@@ -2,7 +2,7 @@ import random
 import torch
 
 from torchvision.transforms import functional as F
-from torchvision.transforms import Normalize as N
+from torchvision.transforms import Normalize
 
 class Compose(object):
     def __init__(self, transforms):
