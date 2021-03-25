@@ -29,7 +29,7 @@ class RandomHorizontalFlip(object):
 
 class Normalize(object):
     def __init__(self, prob):
-    self.prob = prob
+        self.prob = prob
     
     def __call__(self, image, target):
         image = image.Normalize(
