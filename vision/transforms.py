@@ -28,8 +28,11 @@ class RandomHorizontalFlip(object):
         return image, target
 
 class Normalize(object):
+    def __init__(self, prob):
+    self.prob = prob
+    
     def __call__(self, image, target):
-        image = image.N(
+        image = image.Normalize(
         mean=[0.485, 0.456, 0.406],
         std=[0.229, 0.224, 0.225])
         return image, target
