@@ -13,7 +13,6 @@ class Compose(object):
             image, target = t(image, target)
         return image, target
 
-
 class RandomHorizontalFlip(object):
     def __init__(self, prob):
         self.prob = prob
@@ -28,8 +27,11 @@ class RandomHorizontalFlip(object):
         return image, target
 
 class Normalize(object):
-    def __init__(self, prob):
-        self.prob = prob
+    def __init__(self, mean, std, inplace=False):
+        super().__init__()
+        self.mean = mean
+        self.std = std
+        self.inplace = inplace
     
     def __call__(self, image, target):
         image = image.Normalize(
