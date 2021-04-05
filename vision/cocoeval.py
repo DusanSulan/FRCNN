@@ -425,7 +425,7 @@ class COCOeval:
         Compute and display summary metrics for evaluation results.
         Note this functin can *only* be applied on the default parameter setting
         '''
-        def _summarize( ap=1, iouThr=None, areaRng='all', maxDets=20, cls=999 ):
+        def _summarize( ap=1, iouThr=None, areaRng='all', maxDets=100, cls=999 ):
             p = self.params
             iStr = ' {:<18} {} @[ IoU={:<9} | area={:>6s} | maxDets={:>3d} ] = {:0.3f}'
             titleStr = 'Average Precision' if ap == 1 else 'Average Recall'
@@ -495,16 +495,16 @@ class COCOeval:
             return stats
         def _summarizeKps():
             stats = np.zeros((10,))
-            stats[0] = _summarize(1, maxDets=20)
-            stats[1] = _summarize(1, maxDets=20, iouThr=.5)
-            stats[2] = _summarize(1, maxDets=20, iouThr=.75)
-            stats[3] = _summarize(1, maxDets=20, areaRng='medium')
-            stats[4] = _summarize(1, maxDets=20, areaRng='large')
-            stats[5] = _summarize(0, maxDets=20)
-            stats[6] = _summarize(0, maxDets=20, iouThr=.5)
-            stats[7] = _summarize(0, maxDets=20, iouThr=.75)
-            stats[8] = _summarize(0, maxDets=20, areaRng='medium')
-            stats[9] = _summarize(0, maxDets=20, areaRng='large')
+            stats[0] = _summarize(1, maxDets=100)
+            stats[1] = _summarize(1, maxDets=100, iouThr=.5)
+            stats[2] = _summarize(1, maxDets=100, iouThr=.75)
+            stats[3] = _summarize(1, maxDets=100, areaRng='medium')
+            stats[4] = _summarize(1, maxDets=100, areaRng='large')
+            stats[5] = _summarize(0, maxDets=100)
+            stats[6] = _summarize(0, maxDets=100, iouThr=.5)
+            stats[7] = _summarize(0, maxDets=100, iouThr=.75)
+            stats[8] = _summarize(0, maxDets=100, areaRng='medium')
+            stats[9] = _summarize(0, maxDets=100, areaRng='large')
             return stats
         if not self.eval:
             raise Exception('Please run accumulate() first')
@@ -529,7 +529,7 @@ class Params:
 
         self.iouThrs = np.linspace(.5, 0.95, np.round((0.95 - .5) / .05) + 1, endpoint=True)
         self.recThrs = np.linspace(.0, 1.00, np.round((1.00 - .0) / .01) + 1, endpoint=True)
-        self.maxDets = [1, 10, 20]
+        self.maxDets = [1, 10, 100]
         self.areaRng = [[0 ** 2, 1e5 ** 2], [0 ** 2, 32 ** 2], [32 ** 2, 96 ** 2], [96 ** 2, 1e5 ** 2]]
         self.areaRngLbl = ['all', 'small', 'medium', 'large']
         self.useCats = 1
@@ -540,7 +540,7 @@ class Params:
         # np.arange causes trouble.  the data point on arange is slightly larger than the true value
         self.iouThrs = np.linspace(.5, 0.95, np.round((0.95 - .5) / .05) + 1, endpoint=True)
         self.recThrs = np.linspace(.0, 1.00, np.round((1.00 - .0) / .01) + 1, endpoint=True)
-        self.maxDets = [20]
+        self.maxDets = [100]
         self.areaRng = [[0 ** 2, 1e5 ** 2], [32 ** 2, 96 ** 2], [96 ** 2, 1e5 ** 2]]
         self.areaRngLbl = ['all', 'medium', 'large']
         self.useCats = 1
