@@ -403,7 +403,7 @@ class COCOeval:
                         inds = np.searchsorted(rc, p.recThrs, side='left')
                         try:
                             for ri, pi in enumerate(inds):
-                                if dtScoresSorted[pi] > 0.5 :
+                                if dtScoresSorted[pi] > 0.7 :
                                     q[ri] = pr[pi]
                                     ss[ri] = dtScoresSorted[pi]
                         except:
