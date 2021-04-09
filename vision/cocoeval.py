@@ -403,9 +403,9 @@ class COCOeval:
                         inds = np.searchsorted(rc, p.recThrs, side='left')
                         try:
                             for ri, pi in enumerate(inds):
-                                if dtScoresSorted[pi] > 0.7 :
-                                    q[ri] = pr[pi]
-                                    ss[ri] = dtScoresSorted[pi]
+                                #if dtScoresSorted[pi] > 0.7 :
+                                q[ri] = pr[pi]
+                                ss[ri] = dtScoresSorted[pi]
                         except:
                             pass
                         precision[t,:,k,a,m] = np.array(q)
